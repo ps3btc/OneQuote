@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+// The QuoteHead class ...
 public class QuoteHead extends Service {
     private WindowManager windowManager;
     private View appHead;
