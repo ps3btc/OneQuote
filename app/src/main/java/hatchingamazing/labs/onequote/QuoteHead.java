@@ -1,22 +1,14 @@
 package hatchingamazing.labs.onequote;
 
-import hatchingamazing.labs.onequote.R;
-
-import android.app.AlertDialog;
 import android.app.IntentService;
-import android.app.Service;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PixelFormat;
-import android.os.IBinder;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 // The QuoteHead class ...
@@ -39,7 +31,7 @@ public class QuoteHead extends IntentService {
     public void CreateAppHead() {
         LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
-        appHead = vi.inflate(R.layout.quote_head2, null);
+        appHead = vi.inflate(R.layout.quote_head, null);
         TextView textView = (TextView) appHead.findViewById(R.id.myImageViewText);
         if (messageToRemember == null) {
             messageToRemember = "default";
@@ -47,14 +39,7 @@ public class QuoteHead extends IntentService {
         textView.setText(messageToRemember);
         TextView textViewX = (TextView) appHead.findViewById(R.id.myImageViewTextX);
         textViewX.setOnClickListener(onClickListener);
-        /*
-        Button okButton = (Button) appHead.findViewById(R.id.dismissButton);
-        if (okButton != null) {
-            if (onClickListener != null) {
-                okButton.setOnClickListener(onClickListener);
-            }
-        }
-        */
+
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -96,7 +81,7 @@ public class QuoteHead extends IntentService {
                 }
             });
         } catch (Exception e) {
-            // TODO: handle exception
+            // Do something to handle the exception
         }
 
     }
@@ -112,7 +97,5 @@ public class QuoteHead extends IntentService {
         super.onDestroy();
         if (appHead != null) windowManager.removeView(appHead);
         CreateAppHead();
-        //windowManager.addView(appHead, params);
     }
-
 }

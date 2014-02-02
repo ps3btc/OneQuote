@@ -18,16 +18,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         Bundle bundle = getIntent().getExtras();
 
-        /*
-        if(bundle != null && bundle.getString("LAUNCH").equals("YES")) {
-            Intent serviceIntent = new Intent(MainActivity.this, QuoteHead.class);
-            EditText editText = (EditText) findViewById(R.id.reminderText);
-            serviceIntent.putExtra("KEY", editText.getText().toString());
-            startService(serviceIntent);
-            finish();
-        }
-        */
-
         Button launch = (Button)findViewById(R.id.button1);
         launch.setOnClickListener(new OnClickListener() {
             @Override
@@ -47,7 +37,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         Bundle bundle = getIntent().getExtras();
-
         if(bundle != null && bundle.getString("LAUNCH").equals("YES")) {
             startService(new Intent(MainActivity.this, QuoteHead.class));
         }
