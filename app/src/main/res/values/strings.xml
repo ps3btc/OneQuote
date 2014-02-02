@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">One inspirational quote a day</string>
-    <string name="start">Get inspired</string>
-    <string name="stop">Bye</string>
+    <string name="app_name">Don\'t forget to call mum</string>
+    <string name="start">Never forget</string>
+    <string name="reminder_message">Call mum, tell her I love her</string>
 
 </resources>

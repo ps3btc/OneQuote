@@ -3,6 +3,7 @@ package hatchingamazing.labs.onequote;
 import hatchingamazing.labs.onequote.R;
 
 import android.app.AlertDialog;
+import android.app.IntentService;
 import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,13 +20,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 // The QuoteHead class ...
-public class QuoteHead extends Service {
+public class QuoteHead extends IntentService {
     private WindowManager windowManager;
     private View appHead;
+    private String messageToRemember;
 
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
+    public QuoteHead() {
+        super("HelloIntentService");
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -38,15 +39,22 @@ public class QuoteHead extends Service {
     public void CreateAppHead() {
         LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
-        appHead = vi.inflate(R.layout.quote_head, null);
+        appHead = vi.inflate(R.layout.quote_head2, null);
         TextView textView = (TextView) appHead.findViewById(R.id.myImageViewText);
-        textView.setText("there's an image above me");
+        if (messageToRemember == null) {
+            messageToRemember = "default";
+        }
+        textView.setText(messageToRemember);
+        TextView textViewX = (TextView) appHead.findViewById(R.id.myImageViewTextX);
+        textViewX.setOnClickListener(onClickListener);
+        /*
         Button okButton = (Button) appHead.findViewById(R.id.dismissButton);
         if (okButton != null) {
             if (onClickListener != null) {
                 okButton.setOnClickListener(onClickListener);
             }
         }
+        */
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -59,10 +67,43 @@ public class QuoteHead extends Service {
         params.x = 0;
         params.y = 100;
         windowManager.addView(appHead, params);
+
+        try {
+            appHead.setOnTouchListener(new View.OnTouchListener() {
+                private WindowManager.LayoutParams paramsF = params;
+                private int initialX;
+                private int initialY;
+                private float initialTouchX;
+                private float initialTouchY;
+
+                @Override public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            initialX = paramsF.x;
+                            initialY = paramsF.y;
+                            initialTouchX = event.getRawX();
+                            initialTouchY = event.getRawY();
+                            break;
+                        case MotionEvent.ACTION_UP:
+                            break;
+                        case MotionEvent.ACTION_MOVE:
+                            paramsF.x = initialX + (int) (event.getRawX() - initialTouchX);
+                            paramsF.y = initialY + (int) (event.getRawY() - initialTouchY);
+                            windowManager.updateViewLayout(appHead, paramsF);
+                            break;
+                    }
+                    return false;
+                }
+            });
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
     }
 
-    public void onCreate() {
-        super.onCreate();
+    @Override
+    protected void onHandleIntent(Intent intent) {
+        messageToRemember = intent.getStringExtra("KEY");
         CreateAppHead();
     }
 
@@ -73,4 +114,5 @@ public class QuoteHead extends Service {
         CreateAppHead();
         //windowManager.addView(appHead, params);
     }
+
 }

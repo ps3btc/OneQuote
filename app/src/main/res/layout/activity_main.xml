@@ -14,14 +14,27 @@
         android:layout_marginTop="100dp"
         android:text="@string/start" />
 
-    <Button
-        android:id="@+id/button2"
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_alignRight="@+id/button1"
+        android:id="@+id/reminderText"
+        android:hint="@string/reminder_message"
+        android:maxLength="40"
+        android:layout_marginTop="49dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Once you hit Never forget you can move the reminder around. You can close it by hitting the red X."
+        android:id="@+id/textView"
+        android:layout_marginTop="35dp"
+        android:typeface="monospace"
         android:layout_below="@+id/button1"
-        android:layout_marginTop="10dp"
-        android:text="@string/stop" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
 
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends Activity {
 
@@ -15,31 +16,32 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Bundle bundle = getIntent().getExtras();
 
+        /*
         if(bundle != null && bundle.getString("LAUNCH").equals("YES")) {
-            startService(new Intent(MainActivity.this, QuoteHead.class));
+            Intent serviceIntent = new Intent(MainActivity.this, QuoteHead.class);
+            EditText editText = (EditText) findViewById(R.id.reminderText);
+            serviceIntent.putExtra("KEY", editText.getText().toString());
+            startService(serviceIntent);
+            finish();
         }
+        */
 
         Button launch = (Button)findViewById(R.id.button1);
         launch.setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                startService(new Intent(MainActivity.this, QuoteHead.class));
+                Intent serviceIntent = new Intent(MainActivity.this, QuoteHead.class);
+                EditText editText = (EditText) findViewById(R.id.reminderText);
+                String reminderMessage = editText.getText().toString();
+                if (!reminderMessage.matches("")) {
+                    serviceIntent.putExtra("KEY", editText.getText().toString());
+                    startService(serviceIntent);
+                    finish();
+                }
             }
         });
-
-        Button stop = (Button)findViewById(R.id.button2);
-        stop.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                stopService(new Intent(MainActivity.this, QuoteHead.class));
-            }
-        });
-
     }
 
     @Override
