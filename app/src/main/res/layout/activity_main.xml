@@ -8,11 +8,10 @@
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="100dp"
-        android:text="@string/start" />
+        android:textSize="16sp"
+        android:text="@string/start"
+        android:layout_below="@+id/reminderText"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -20,6 +19,7 @@
         android:id="@+id/reminderText"
         android:hint="@string/reminder_message"
         android:maxLength="40"
+        android:textSize="24sp"
         android:layout_marginTop="49dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Once you hit Never forget you can move the reminder around. You can close it by hitting the red X."
+        android:text="Write something in the text box above then click on Never forget. Once you do that you'll see what you wrote above appearing everywhere. It'll follow you. \n\nYou can move it around and you can close it by hitting the red X."
         android:id="@+id/textView"
         android:layout_marginTop="35dp"
         android:typeface="monospace"
