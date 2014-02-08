@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class MainActivity extends Activity {
+    public static final String MESSAGE_KEY = "NAGME_KEY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class MainActivity extends Activity {
                 EditText editText = (EditText) findViewById(R.id.reminderText);
                 String reminderMessage = editText.getText().toString();
                 if (!reminderMessage.matches("")) {
-                    serviceIntent.putExtra("KEY", editText.getText().toString());
+                    serviceIntent.putExtra(MESSAGE_KEY, editText.getText().toString());
                     startService(serviceIntent);
                     finish();
                 }

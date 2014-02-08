@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Aye! Don\'t forget</string>
-    <string name="start">Never forget</string>
-    <string name="reminder_message">to write something here</string>
+    <string name="app_name">Nag Me</string>
+    <string name="start">Nag Me</string>
+    <string name="reminder_message">write something</string>
 
 </resources>

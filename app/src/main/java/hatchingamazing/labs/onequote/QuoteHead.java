@@ -11,14 +11,12 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-// The QuoteHead class ...
 public class QuoteHead extends IntentService {
     private WindowManager windowManager;
     private View appHead;
-    private String messageToRemember;
 
     public QuoteHead() {
-        super("HelloIntentService");
+        super("NagMeIntentService");
     }
 
     private View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -28,15 +26,12 @@ public class QuoteHead extends IntentService {
         }
     };
 
-    public void CreateAppHead() {
+    public void CreateAppHead(String message) {
         LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
         appHead = vi.inflate(R.layout.quote_head, null);
         TextView textView = (TextView) appHead.findViewById(R.id.myImageViewText);
-        if (messageToRemember == null) {
-            messageToRemember = "default";
-        }
-        textView.setText(messageToRemember);
+        textView.setText(message);
         TextView textViewX = (TextView) appHead.findViewById(R.id.myImageViewTextX);
         textViewX.setOnClickListener(onClickListener);
 
@@ -83,19 +78,27 @@ public class QuoteHead extends IntentService {
         } catch (Exception e) {
             // Do something to handle the exception
         }
-
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        messageToRemember = intent.getStringExtra("KEY");
-        CreateAppHead();
+        CreateAppHead(intent.getStringExtra(MainActivity.MESSAGE_KEY));
+    }
+
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        super.onStartCommand(intent, flags, startId);
+        if (appHead != null) {
+            CreateAppHead(intent.getStringExtra(MainActivity.MESSAGE_KEY));
+        }
+        return START_STICKY;
+    }
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        this.setIntentRedelivery(true);
     }
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
-        if (appHead != null) windowManager.removeView(appHead);
-        CreateAppHead();
     }
 }
